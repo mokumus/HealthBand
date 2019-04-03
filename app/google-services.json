@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "1067278296627",
+    "firebase_url": "https://health-band-database-153fe.firebaseio.com",
+    "project_id": "health-band-database-153fe",
+    "storage_bucket": "health-band-database-153fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067278296627:android:dfc555c58f9233fb",
+        "android_client_info": {
+          "package_name": "com.cse396.healthband"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067278296627-oldeholhviq0fgettb8sfqkvo9sm66mu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cse396.healthband",
+            "certificate_hash": "efa33b6ac23cfb2163b3fb36ad3ddbcb926fb19f"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0xpDVP16dCxJ6TVBM3dWkOJJOOnbRUG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1067278296627-rsfs4oanf5u6518655rpar94m40n41oi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
