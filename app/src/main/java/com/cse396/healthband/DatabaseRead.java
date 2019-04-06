@@ -27,7 +27,10 @@ class DatabaseRead {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 ArrayList<HashMap<String, Object>> values =  (ArrayList<HashMap<String, Object>>)dataSnapshot.getValue();
-                Log.d(TAG, "Value is: " + values);
+                Log.d(TAG, "Value is: " + values.get(0).get("date"));
+                Log.d(TAG, "Value is: " + values.get(1));
+                Log.d(TAG, "Value is: " + values.get(2));
+
                 // Organize values if needed
                 // ...
                 // Update view according to values
