@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String HEARTH_RATE = "hearthRate";
     private static final String FLIGHTS_CLIMBED = "flightsClimbed";
     private static final String CURRENT_MOVEMENT = "currentMovement";
-    private static final boolean CLEAR = false;
+    private static final boolean CLEAR = true;
 
 
     @Override
@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(this);
+
+        //We need to declare multiple DatabaseRead instances to listen different fields.
         DatabaseRead dbReader = new DatabaseRead();
 
         if(CLEAR == true){
@@ -37,19 +39,14 @@ public class MainActivity extends AppCompatActivity {
             clearChild(FLIGHTS_CLIMBED);
             clearChild(HEARTH_RATE);
             clearChild(CURRENT_MOVEMENT);
+            fillWithMock();
         }
 
-        //fillWithMock();
+
 
         ArrayList<HashMap<String, Object>> toBeFilled = new ArrayList<>();
+
         dbReader.retrieveValues(STEPS);
         Log.d(TAG, "toBeFilled: " + toBeFilled);
-
-
-
-
-
-
-
     }
 }
