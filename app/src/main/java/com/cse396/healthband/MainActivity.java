@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import static android.support.constraint.Constraints.TAG;
+import static com.cse396.healthband.DatabaseRead.parseTime;
 import static com.cse396.healthband.DatabaseRead.retrieveValues;
 import static com.cse396.healthband.DatabaseTest.clearChild;
 import static com.cse396.healthband.DatabaseTest.fillWithMock;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String HEARTH_RATE = "hearthRate";
     private static final String FLIGHTS_CLIMBED = "flightsClimbed";
     private static final String CURRENT_MOVEMENT = "currentMovement";
-    private static final boolean CLEAR = true;
+    private static final boolean CLEAR = false;
 
 
     @Override
@@ -42,11 +43,8 @@ public class MainActivity extends AppCompatActivity {
             fillWithMock();
         }
 
-
-
-        ArrayList<HashMap<String, Object>> toBeFilled = new ArrayList<>();
-
         dbReader.retrieveValues(STEPS);
-        Log.d(TAG, "toBeFilled: " + toBeFilled);
+
+
     }
 }
