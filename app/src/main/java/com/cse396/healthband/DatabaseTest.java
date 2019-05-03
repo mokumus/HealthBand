@@ -4,6 +4,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * DatabaseTest is the main class we'll be using to fill the Firebase database
@@ -16,6 +17,7 @@ class DatabaseTest {
     private static final String HEARTH_RATE = "hearthRate";
     private static final String FLIGHTS_CLIMBED = "flightsClimbed";
     private static final String CURRENT_MOVEMENT = "currentMovement";
+
 
     /**
      * @param name child data node name
@@ -74,5 +76,49 @@ class DatabaseTest {
         List<TaggedPairs<String, String>> currentMovementData = new ArrayList<> ();
         currentMovementData.add(new TaggedPairs("date", "06/04/2019 19:23", "movement", "Sitting"));
         setValues(CURRENT_MOVEMENT, currentMovementData);
+
+    }
+
+    protected static void fillWithWeeklyMock(){
+        Random rand = new Random();
+
+        String[] dates = {"01/04/2019 12:16",
+                "01/04/2019 13:16",
+                "01/04/2019 14:16",
+                "02/04/2019 13:22",
+                "02/04/2019 14:22",
+                "02/04/2019 15:22",
+                "03/04/2019 11:54",
+                "03/04/2019 12:54",
+                "03/04/2019 13:54",
+                "04/04/2019 18:32",
+                "04/04/2019 19:32",
+                "04/04/2019 20:32",
+                "05/04/2019 21:12",
+                "05/04/2019 22:32",
+                "05/04/2019 23:24",
+                "06/04/2019 09:00",
+                "06/04/2019 10:00",
+                "06/04/2019 11:00",
+                "07/04/2019 05:02",
+                "07/04/2019 06:02",
+                "07/04/2019 08:02"};
+
+        List<TaggedPairs<String, Integer>> stepsData = new ArrayList<> ();
+        List<TaggedPairs<String, Integer>> flightsClimbedData = new ArrayList<> ();
+        List<TaggedPairs<String, Integer>> hearthRateData = new ArrayList<> ();
+        for(String d : dates){
+            stepsData.add(new TaggedPairs("date", d, "stepCount", rand.nextInt(1000)));
+            flightsClimbedData.add(new TaggedPairs("date", d, "climbed", rand.nextInt(20)));
+            hearthRateData.add(new TaggedPairs("date", d, "bmp", 60 + rand.nextInt(15)));
+        }
+        setValues(STEPS, stepsData);
+        setValues(FLIGHTS_CLIMBED, flightsClimbedData);
+        setValues(HEARTH_RATE, hearthRateData);
+
+        List<TaggedPairs<String, String>> currentMovementData = new ArrayList<> ();
+        currentMovementData.add(new TaggedPairs("date", "06/04/2019 19:23", "movement", "Sitting"));
+        setValues(CURRENT_MOVEMENT, currentMovementData);
+
     }
 }

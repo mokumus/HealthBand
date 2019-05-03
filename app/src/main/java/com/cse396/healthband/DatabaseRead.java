@@ -1,6 +1,8 @@
 package com.cse396.healthband;
 
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,10 +40,11 @@ class DatabaseRead {
 
                 }
 
+
                 // Organize values if needed
                 // ...
                 // Update view according to values
-                // ...
+
             }
 
             @Override
@@ -64,7 +67,7 @@ class DatabaseRead {
             // But remember as we don't pass the date information this
             // date object will represent the 1st of january 1970.
             date = sdf.parse(timeStr);
-            System.out.println("Date and Time: " + date);
+            //System.out.println("Date and Time: " + date);
 
         } catch (Exception e) {
             e.printStackTrace();
