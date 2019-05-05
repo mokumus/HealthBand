@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import static com.cse396.healthband.DatabaseRead.retrieveValues;
 import static com.cse396.healthband.DatabaseTest.clearChild;
 import static com.cse396.healthband.DatabaseTest.fillWithMock;
 import static com.cse396.healthband.DatabaseTest.fillWithWeeklyMock;
+import static com.cse396.healthband.QueryLocal.queryByDateRange;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -55,37 +57,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //dbReader.retrieveValues(STEPS);
+        Date s = parseTime("03/04/2019 00:00");
+        Date e = parseTime("06/04/2019 00:00");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference(STEPS);
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                ArrayList<HashMap<String, Object>> values =  (ArrayList<HashMap<String, Object>>)dataSnapshot.getValue();
-                for(int i = 0; i < values.size(); i++){
-                    Log.d(TAG, "Value is: " + values.get(i));
-                    Log.d(TAG, "time is: " + parseTime((String) values.get(i).get("date")));
-
-                }
-
-
-                // Organize values if needed
-                // ...
-                // Update view according to values
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
+        queryByDateRange(STEPS,s,e);
 
     }
 }
