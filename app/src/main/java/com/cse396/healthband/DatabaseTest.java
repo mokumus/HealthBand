@@ -1,5 +1,6 @@
 package com.cse396.healthband;
 
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.Random;
  * @author Muhammed Okumus
  */
 class DatabaseTest {
-    static Integer i = 0;
+    private static Integer i = 0;
     private static final String STEPS = "steps";
     private static final String HEARTH_RATE = "hearthRate";
     private static final String FLIGHTS_CLIMBED = "flightsClimbed";
@@ -25,12 +26,12 @@ class DatabaseTest {
      * @param <T> any object
      * Create/Rewrite all values in the given child to those in the provided data
      */
-    protected static <T> void setValues(String name, List<TaggedPairs<String, T>> data){
+    private static <T> void setValues(String name, List<TaggedPairs<Object, T>> data){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(name);
 
 
-        for(TaggedPairs<String, T> entry : data){
+        for(TaggedPairs<Object, T> entry : data){
             myRef.child(i.toString()).child(entry.getFirstTag()).setValue(entry.getFirstValue());
             myRef.child(i.toString()).child(entry.getSecondTag()).setValue(entry.getSecondValue());
             i++;
@@ -43,45 +44,83 @@ class DatabaseTest {
      * @param name child data node name
      * Deletes the given child from database.
      */
-    protected static void clearChild(String name){
+    static void clearChild(String name){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(name);
         myRef.removeValue();
     }
 
     /**
+     * Fills child nodes:
+     * CURRENT MOVEMENT
+     * STEPS
+     * FLIGHTS CLIMBED
+     * HEARTHRATE
+     *
+     * With mock data and uses Firebase Timestamp to tag with UNIX time(long int).
+     */
+    @SuppressWarnings("unchecked")
+    static void fillWithTimestampMock(){
+        Random rand = new Random();
+        List<TaggedPairs<Object, Integer>> stepsData = new ArrayList<> ();
+        List<TaggedPairs<Object, Integer>> flightsClimbedData = new ArrayList<> ();
+        List<TaggedPairs<Object, Integer>> hearthRateData = new ArrayList<> ();
+
+        for(int i = 0; i <= 20; i++){
+            stepsData.add(new TaggedPairs("stepCount", rand.nextInt(1000)));
+            flightsClimbedData.add(new TaggedPairs("climbed", rand.nextInt(20)));
+            hearthRateData.add(new TaggedPairs("bmp", 60 + rand.nextInt(15)));
+        }
+
+        List<TaggedPairs<Object, String>> currentMovementData = new ArrayList<> ();
+        currentMovementData.add(new TaggedPairs("movement", "Sitting"));
+
+        setValues(CURRENT_MOVEMENT, currentMovementData);
+        setValues(STEPS, stepsData);
+        setValues(FLIGHTS_CLIMBED, flightsClimbedData);
+        setValues(HEARTH_RATE, hearthRateData);
+    }
+
+    /*-----------------------------------------------*/
+    /*------------OLD FUNCTIONS BELLOW---------------*/
+    /*------------USE TIMESTAMP INSTEAD--------------*/
+
+    /**
      * Fills the given child in the database with mock data. Will override data if date's
      * are not changed. Only use for testing purposes.
      */
+    @Deprecated
+    @SuppressWarnings("unchecked")
     protected static void fillWithMock(){
 
-        List<TaggedPairs<String, Integer>> stepsData = new ArrayList<> ();
+        List<TaggedPairs<Object, Integer>> stepsData = new ArrayList<> ();
         stepsData.add(new TaggedPairs("date", "06/04/2019 12:46", "stepCount", 150));
         stepsData.add(new TaggedPairs("date", "06/04/2019 13:32", "stepCount", 350));
         stepsData.add(new TaggedPairs("date", "06/04/2019 19:23", "stepCount", 1050));
         setValues(STEPS, stepsData);
 
-        List<TaggedPairs<String, Integer>> flightsClimbedData = new ArrayList<> ();
+        List<TaggedPairs<Object, Integer>> flightsClimbedData = new ArrayList<> ();
         flightsClimbedData.add(new TaggedPairs("date", "06/04/2019 12:46", "climbed", 1));
         flightsClimbedData.add(new TaggedPairs("date", "06/04/2019 13:32", "climbed", 5));
         flightsClimbedData.add(new TaggedPairs("date", "06/04/2019 19:23", "climbed", 13));
         setValues(FLIGHTS_CLIMBED, flightsClimbedData);
 
-        List<TaggedPairs<String, Integer>> hearthRateData = new ArrayList<> ();
+        List<TaggedPairs<Object, Integer>> hearthRateData = new ArrayList<> ();
         hearthRateData.add(new TaggedPairs("date", "06/04/2019 12:46", "bmp", 68));
         hearthRateData.add(new TaggedPairs("date", "06/04/2019 13:32", "bmp", 70));
         hearthRateData.add(new TaggedPairs("date", "06/04/2019 19:23", "bmp", 65));
         setValues(HEARTH_RATE, hearthRateData);
 
-        List<TaggedPairs<String, String>> currentMovementData = new ArrayList<> ();
+        List<TaggedPairs<Object, String>> currentMovementData = new ArrayList<> ();
         currentMovementData.add(new TaggedPairs("date", "06/04/2019 19:23", "movement", "Sitting"));
         setValues(CURRENT_MOVEMENT, currentMovementData);
 
     }
 
+    @Deprecated
+    @SuppressWarnings("unchecked")
     protected static void fillWithWeeklyMock(){
         Random rand = new Random();
-
         String[] dates = {"01/04/2019 12:16",
                 "01/04/2019 13:16",
                 "01/04/2019 14:16",
@@ -104,9 +143,9 @@ class DatabaseTest {
                 "07/04/2019 06:02",
                 "07/04/2019 08:02"};
 
-        List<TaggedPairs<String, Integer>> stepsData = new ArrayList<> ();
-        List<TaggedPairs<String, Integer>> flightsClimbedData = new ArrayList<> ();
-        List<TaggedPairs<String, Integer>> hearthRateData = new ArrayList<> ();
+        List<TaggedPairs<Object, Integer>> stepsData = new ArrayList<> ();
+        List<TaggedPairs<Object, Integer>> flightsClimbedData = new ArrayList<> ();
+        List<TaggedPairs<Object, Integer>> hearthRateData = new ArrayList<> ();
         for(String d : dates){
             stepsData.add(new TaggedPairs("date", d, "stepCount", rand.nextInt(1000)));
             flightsClimbedData.add(new TaggedPairs("date", d, "climbed", rand.nextInt(20)));
@@ -116,9 +155,9 @@ class DatabaseTest {
         setValues(FLIGHTS_CLIMBED, flightsClimbedData);
         setValues(HEARTH_RATE, hearthRateData);
 
-        List<TaggedPairs<String, String>> currentMovementData = new ArrayList<> ();
+        List<TaggedPairs<Object, String>> currentMovementData = new ArrayList<> ();
         currentMovementData.add(new TaggedPairs("date", "06/04/2019 19:23", "movement", "Sitting"));
         setValues(CURRENT_MOVEMENT, currentMovementData);
-
     }
+
 }

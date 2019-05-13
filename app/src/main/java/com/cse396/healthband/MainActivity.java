@@ -2,32 +2,9 @@ package com.cse396.healthband;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-
-
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static android.support.constraint.Constraints.TAG;
-import static com.cse396.healthband.DatabaseRead.parseTime;
-import static com.cse396.healthband.DatabaseRead.retrieveValues;
-import static com.cse396.healthband.DatabaseTest.clearChild;
-import static com.cse396.healthband.DatabaseTest.fillWithMock;
-import static com.cse396.healthband.DatabaseTest.fillWithWeeklyMock;
-import static com.cse396.healthband.QueryLocal.queryByDateRange;
+import static com.cse396.healthband.DatabaseTest.*;
+import static com.cse396.healthband.DatabaseRead.*;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -48,19 +25,17 @@ public class MainActivity extends AppCompatActivity {
         DatabaseRead dbReader = new DatabaseRead();
 
 
-        if(CLEAR == true){
+        if(CLEAR){
             clearChild(STEPS);
             clearChild(FLIGHTS_CLIMBED);
             clearChild(HEARTH_RATE);
             clearChild(CURRENT_MOVEMENT);
-            fillWithWeeklyMock();
+            fillWithTimestampMock();
         }
 
-        //dbReader.retrieveValues(STEPS);
-        Date s = parseTime("03/04/2019 00:00");
-        Date e = parseTime("06/04/2019 00:00");
+        retrieveValues(STEPS);
+        retrieveValues(HEARTH_RATE);
 
-        queryByDateRange(STEPS,s,e);
 
     }
 }
