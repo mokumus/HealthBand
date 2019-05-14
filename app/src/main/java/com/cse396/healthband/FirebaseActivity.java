@@ -50,7 +50,7 @@ public class FirebaseActivity extends AppCompatActivity {
 
                 if(CLEAR)
                     clearAndFill();
-                
+
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("steps");
 

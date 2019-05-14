@@ -14,11 +14,6 @@ import java.util.Random;
  */
 class DatabaseTest {
     private static Integer i = 0;
-    private static final String STEPS = "steps";
-    private static final String HEARTH_RATE = "hearthRate";
-    private static final String FLIGHTS_CLIMBED = "flightsClimbed";
-    private static final String CURRENT_MOVEMENT = "currentMovement";
-
 
     /**
      * @param name child data node name
@@ -29,7 +24,6 @@ class DatabaseTest {
     private static <T> void setValues(String name, List<TaggedPairs<Object, T>> data){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(name);
-
 
         for(TaggedPairs<Object, T> entry : data){
             myRef.child(i.toString()).child(entry.getFirstTag()).setValue(entry.getFirstValue());
@@ -75,10 +69,10 @@ class DatabaseTest {
         List<TaggedPairs<Object, String>> currentMovementData = new ArrayList<> ();
         currentMovementData.add(new TaggedPairs("movement", "Sitting"));
 
-        setValues(CURRENT_MOVEMENT, currentMovementData);
-        setValues(STEPS, stepsData);
-        setValues(FLIGHTS_CLIMBED, flightsClimbedData);
-        setValues(HEARTH_RATE, hearthRateData);
+        setValues("currentMovement", currentMovementData);
+        setValues("steps", stepsData);
+        setValues("flightsClimbed", flightsClimbedData);
+        setValues("hearthRate", hearthRateData);
     }
 
     /*-----------------------------------------------*/
@@ -97,23 +91,23 @@ class DatabaseTest {
         stepsData.add(new TaggedPairs("date", "06/04/2019 12:46", "stepCount", 150));
         stepsData.add(new TaggedPairs("date", "06/04/2019 13:32", "stepCount", 350));
         stepsData.add(new TaggedPairs("date", "06/04/2019 19:23", "stepCount", 1050));
-        setValues(STEPS, stepsData);
+        setValues("steps", stepsData);
 
         List<TaggedPairs<Object, Integer>> flightsClimbedData = new ArrayList<> ();
         flightsClimbedData.add(new TaggedPairs("date", "06/04/2019 12:46", "climbed", 1));
         flightsClimbedData.add(new TaggedPairs("date", "06/04/2019 13:32", "climbed", 5));
         flightsClimbedData.add(new TaggedPairs("date", "06/04/2019 19:23", "climbed", 13));
-        setValues(FLIGHTS_CLIMBED, flightsClimbedData);
+        setValues("flightsClimbed", flightsClimbedData);
 
         List<TaggedPairs<Object, Integer>> hearthRateData = new ArrayList<> ();
         hearthRateData.add(new TaggedPairs("date", "06/04/2019 12:46", "bmp", 68));
         hearthRateData.add(new TaggedPairs("date", "06/04/2019 13:32", "bmp", 70));
         hearthRateData.add(new TaggedPairs("date", "06/04/2019 19:23", "bmp", 65));
-        setValues(HEARTH_RATE, hearthRateData);
+        setValues("hearthRate", hearthRateData);
 
         List<TaggedPairs<Object, String>> currentMovementData = new ArrayList<> ();
         currentMovementData.add(new TaggedPairs("date", "06/04/2019 19:23", "movement", "Sitting"));
-        setValues(CURRENT_MOVEMENT, currentMovementData);
+        setValues("currentMovement", currentMovementData);
 
     }
 
@@ -151,13 +145,13 @@ class DatabaseTest {
             flightsClimbedData.add(new TaggedPairs("date", d, "climbed", rand.nextInt(20)));
             hearthRateData.add(new TaggedPairs("date", d, "bmp", 60 + rand.nextInt(15)));
         }
-        setValues(STEPS, stepsData);
-        setValues(FLIGHTS_CLIMBED, flightsClimbedData);
-        setValues(HEARTH_RATE, hearthRateData);
+        setValues("steps", stepsData);
+        setValues("flightsClimbed", flightsClimbedData);
+        setValues("hearthRate", hearthRateData);
 
         List<TaggedPairs<Object, String>> currentMovementData = new ArrayList<> ();
         currentMovementData.add(new TaggedPairs("date", "06/04/2019 19:23", "movement", "Sitting"));
-        setValues(CURRENT_MOVEMENT, currentMovementData);
+        setValues("currentMovement", currentMovementData);
     }
 
 }
