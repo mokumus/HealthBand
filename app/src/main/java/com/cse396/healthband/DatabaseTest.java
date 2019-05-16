@@ -4,6 +4,7 @@ package com.cse396.healthband;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -43,6 +44,31 @@ class DatabaseTest {
         DatabaseReference myRef = database.getReference(name);
         myRef.removeValue();
     }
+
+
+    static void fillWithFake(){
+        List<TaggedPairs<Object, Integer>> stepsData = new ArrayList<> ();
+        List<TaggedPairs<Object, Integer>> flightsClimbedData = new ArrayList<> ();
+        List<TaggedPairs<Object, Integer>> hearthRateData = new ArrayList<> ();
+
+        Calendar myDate = Calendar.getInstance();
+        System.out.println("Current Date = " + myDate.getTime());
+        // Decrementing days by 2
+        myDate.add(Calendar.DATE, -2);
+        System.out.println("Updated Date = " + myDate.getTime());
+
+
+        stepsData.add(new TaggedPairs("timestamp", myDate.getTimeInMillis(), "stepCount", 23));
+        flightsClimbedData.add(new TaggedPairs("timestamp", myDate.getTimeInMillis(), "climbed", 1));
+        hearthRateData.add(new TaggedPairs("timestamp", myDate.getTimeInMillis(), "bmp", 68));
+
+
+        setValues("steps", stepsData);
+        setValues("flightsClimbed", flightsClimbedData);
+        setValues("hearthRate", hearthRateData);
+    }
+
+
 
     /**
      * Fills child nodes:

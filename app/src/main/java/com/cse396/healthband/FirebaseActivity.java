@@ -18,10 +18,11 @@ import java.util.HashMap;
 import java.util.Date;
 import static android.support.constraint.Constraints.TAG;
 import static com.cse396.healthband.DatabaseTest.clearChild;
+import static com.cse396.healthband.DatabaseTest.fillWithFake;
 import static com.cse396.healthband.DatabaseTest.fillWithTimestampMock;
 
 public class FirebaseActivity extends AppCompatActivity {
-    private static final boolean CLEAR = false;
+    private static final boolean CLEAR = true;
 
     private RecyclerView recyclerView;
     private MyAdapter mAdapter;
@@ -57,11 +58,13 @@ public class FirebaseActivity extends AppCompatActivity {
                 myRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Populate view here
                         values =  (ArrayList<HashMap<String, Object>>)dataSnapshot.getValue();
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(layoutManager);
                         mAdapter = new MyAdapter(values);
                         recyclerView.setAdapter(mAdapter);
+
                     }
 
                     @Override
@@ -114,6 +117,7 @@ public class FirebaseActivity extends AppCompatActivity {
         clearChild("hearthRate");
         clearChild("flightsClimbed");
         clearChild("currentMovement");
-        fillWithTimestampMock();
+        //fillWithTimestampMock();
+        fillWithFake();
     }
 }
